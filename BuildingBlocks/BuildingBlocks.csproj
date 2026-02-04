@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+          <PackageId>Shared.Services.BuildingBlocks</PackageId>
+          <Version>1.1.0</Version>
+  <Authors>Emil Alizada</Authors>
+  <Company>Pragonna</Company>
+    <Description>EventBus + CommandHandler library for CQRS and infrastructure patterns</Description>
+        <PackageReleaseNotes>Improved exception and retry handling; removed logging from library; ACK bug fix.</PackageReleaseNotes>
+    <PackageTags>EventBus;CQRS;Result;Infrastructure</PackageTags>
+  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  <IncludeSymbols>true</IncludeSymbols>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Repository</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="16.0.0" />
+      <PackageReference Include="MediatR" Version="14.0.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.12" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+      <PackageReference Include="Polly" Version="8.6.5" />
+      <PackageReference Include="RabbitMQ.Client" Version="7.2.0" />
+    </ItemGroup>
+
+</Project>
