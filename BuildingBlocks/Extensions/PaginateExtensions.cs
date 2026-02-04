@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace Shared.Services.BuildingBlocks.Extensions;
 
@@ -26,5 +27,20 @@ public static class PaginateExtensions
             source.PageSize,
             source.TotalCount
         );
+    }
+
+    public static async Task<Paginate<TEntity>> ToPaginateAsync<TEntity>(
+        this IQueryable<TEntity> query, int pageIndex = 1, int pageSize = 10)
+    {
+        pageIndex = pageIndex < 1 ? 1 : pageIndex;
+        pageSize  = pageSize  < 1 ? 10 : pageSize;
+        
+        var totalCount = await query.CountAsync();
+        var items = await query
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return new Paginate<TEntity>(items, pageIndex, pageSize, totalCount);
     }
 }

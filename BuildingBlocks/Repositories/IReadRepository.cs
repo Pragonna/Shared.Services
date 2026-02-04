@@ -13,7 +13,7 @@ public interface IReadRepository<TEntity> where TEntity : Entity
         int pageSize = 10,
         bool enableTracking = true);
 
-    Task<IQueryable<TEntity>> GetAsync(
+    Task<List<TEntity>> GetAsync(
         Expression<Func<TEntity, bool>> filter = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
         int pageIndex = 1,

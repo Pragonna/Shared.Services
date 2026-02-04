@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using Shared.Services.BuildingBlocks;
 using Shared.Services.BuildingBlocks.Common;
+using Shared.Services.BuildingBlocks.Extensions;
 
 namespace Shared.DataAccess.BuildingBlocks.Repositories;
 
@@ -22,16 +23,12 @@ public abstract class BaseRepository<TEntity, TContext>(TContext context) : IRep
         if (include != null) query = include(query);
         if (!enableTracking) query = query.AsNoTracking();
 
-        var totalCount = await query.CountAsync();
-        var items = await query
-            .Skip((pageIndex - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
+        query = query.OrderBy(e => e.Id);
 
-        return new Paginate<TEntity>(items, pageIndex, pageSize, totalCount);
+        return await query.ToPaginateAsync(pageIndex, pageSize);
     }
 
-    public virtual async Task<IQueryable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter,
+    public virtual async Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null, int pageIndex = 1,
         int pageSize = 10,
         bool enableTracking = true)
@@ -41,7 +38,7 @@ public abstract class BaseRepository<TEntity, TContext>(TContext context) : IRep
         if (include != null) query = include(query);
         if (!enableTracking) query = query.AsNoTracking();
 
-        return query;
+        return await query.ToListAsync();
     }
 
     public virtual async Task<TEntity> GetByIdAsync(Guid id,
@@ -60,19 +57,19 @@ public abstract class BaseRepository<TEntity, TContext>(TContext context) : IRep
         return await _query.FirstOrDefaultAsync(filter);
     }
 
-    public virtual async Task<TEntity> AddEntityAsync(TEntity entity)
+    public virtual TEntity AddEntity(TEntity entity)
     {
         context.Entry(entity).State = EntityState.Added;
         return entity;
     }
 
-    public virtual async Task<TEntity> ModifyEntityAsync(TEntity entity)
+    public virtual TEntity ModifyEntity(TEntity entity)
     {
         context.Entry(entity).State = EntityState.Modified;
         return entity;
     }
 
-    public virtual async Task<TEntity> DeleteEntityAsync(TEntity entity)
+    public virtual TEntity DeleteEntity(TEntity entity)
     {
         context.Entry(entity).State = EntityState.Deleted;
         return entity;
