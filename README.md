@@ -12,12 +12,12 @@ This repository contains a set of shared .NET libraries intended for reuse acros
 
 - .NET 9 SDK (projects target `net9.0`).
 
-## Build
+## Install
 
 From the repository root run:
 
 ```bash
-dotnet build Shared.Services.sln --configuration Debug
+dotnet add package Shared.Services.BuildingBlocks --version 1.1.1
 ```
 
 ## Usage and implementation examples
@@ -175,8 +175,7 @@ dotnet test
 
 ## License
 
-There is no license file in this repository. Please add an appropriate `LICENSE` file and update this README accordingly.
-
+: pragonna.net
 ## Contact
 
 For issues or integration questions, open an issue or contact the repository maintainer.
