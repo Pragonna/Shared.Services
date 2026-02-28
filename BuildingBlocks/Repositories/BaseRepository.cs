@@ -57,19 +57,19 @@ public abstract class BaseRepository<TEntity, TContext>(TContext context) : IRep
         return await _query.FirstOrDefaultAsync(filter);
     }
 
-    public virtual TEntity AddEntity(TEntity entity)
+    public virtual async Task<TEntity> AddEntity(TEntity entity)
     {
         context.Entry(entity).State = EntityState.Added;
         return entity;
     }
 
-    public virtual TEntity ModifyEntity(TEntity entity)
+    public virtual async Task<TEntity> ModifyEntity(TEntity entity)
     {
         context.Entry(entity).State = EntityState.Modified;
         return entity;
     }
 
-    public virtual TEntity DeleteEntity(TEntity entity)
+    public virtual async Task<TEntity>DeleteEntity(TEntity entity)
     {
         context.Entry(entity).State = EntityState.Deleted;
         return entity;

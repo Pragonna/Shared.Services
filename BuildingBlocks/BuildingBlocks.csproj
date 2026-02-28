@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
           <PackageId>Shared.Services.BuildingBlocks</PackageId>
-          <Version>1.1.1</Version>
+          <Version>1.2.0</Version>
   <Authors>Emil Alizada</Authors>
   <Company>Pragonna</Company>
     <Description>EventBus + CommandHandler library for CQRS and infrastructure patterns</Description>
